@@ -1,0 +1,26 @@
+# roles/create_FwRule/tasks/main.yml
+---
+- name: Make sure UFW is installed
+  apt:
+    name: ufw
+    state: present
+
+- name: Curl for Validation
+  apt:
+    name: curl
+    state: present
+
+- name: Allow ssh access from controlnode
+  ufw:
+    rule: allow
+    src: 192.168.56.108
+    port: ssh
+
+- name: Allow webserver access from controlnode
+  ufw:
+    rule: allow
+    src: 192.168.56.108
+    port: 8000
+
+- name: Reload ufw
+  shell: sudo ufw reload

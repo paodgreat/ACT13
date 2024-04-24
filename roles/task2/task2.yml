@@ -1,0 +1,20 @@
+# roles/delete_FwRule/tasks/main.yml
+---
+- name: make sure UfW is installed
+  apt:
+    name: ufw
+    state: present
+
+- name: Curl for Validation
+  apt:
+    name: curl
+    state: present
+
+- name: Delete rule that allow ssh access from controlnode
+  command: ufw delete allow from 192.168.56.107 to any port ssh
+
+- name: Delete rule that allow webserver access from controlnode
+  command: ufw delete allow from 192.168.56.107 to any port 8000
+
+- name: Reload ufw
+  shell: sudo ufw reload
